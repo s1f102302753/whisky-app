@@ -1,0 +1,10 @@
+# .gitignore for Django (backend)
+*.pyc
+__pycache__
+db.sqlite3
+venv/
+
+# .gitignore for React (frontend)
+node_modules/
+build/
+.env
