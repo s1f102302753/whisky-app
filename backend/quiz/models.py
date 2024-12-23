@@ -23,7 +23,7 @@ class Answer(models.Model):
 class UserScore(models.Model):
     user = models.CharField(max_length=225)   # ユーザー名やIDを保存
     score = models.IntegerField(default=0)
-    data = models.DateTimeField(auto_now_add=True)
+    date = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return f"{self.user} - {self.score} points"

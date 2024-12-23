@@ -1,10 +1,10 @@
-from django.urls import path
 from . import views
-from .views import QuizListView, UserScoreView
+from django.urls import path
+from .views import QuizListView, UserScoreView, root
 
 
 urlpatterns = [
-    path('', views.root, name='root'),
-    path('api/v1/quizzes/', QuizListView.as_view(), name='quiz-list'),
-    path('api/v1/scores/', UserScoreView.as_view(), name='user-score'),
+    path('', root),  # ルート
+    path('quizzes/', QuizListView.as_view(), name='quiz-list'),  # 問題一覧API
+    path('user-scores/<int:pk>/', QuizListView.as_view(), name='quiz-score'), # スコア情報API
 ]
