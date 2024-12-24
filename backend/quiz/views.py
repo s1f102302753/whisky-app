@@ -15,14 +15,18 @@ def root(request):          #コントローラ
 # 問題一覧API
 class QuizListView(APIView):
     def get(self, request):
-        questions = Question.objects.all()
+        questions = (Question.objects.all())
         serializer = QuestionSerializer(questions, many=True)
         return Response({"quizzes": serializer.data})
 
 # スコア情報API
 class UserScoreView(APIView):
     def post(self, request):
-        serializer = UserScoreSerializer(data=request.data)
+        user = request.user  # ログインしているユーザーを取得
+        data = request.data
+        data['user'] = user.id  # ユーザー情報を追加
+        serializer = UserScoreSerializer(data=data)
+        
         if serializer.is_valid():
             serializer.save()
             return Response({"message": "Score saved successfully"})

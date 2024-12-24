@@ -1,18 +1,20 @@
 from rest_framework import serializers # type: ignore
-from .models import Question, Answer, UserScore
+from .models import Category, Question, Choice, UserAnswer, UserScore
+
+# 選択肢
+class ChoiceSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Choice
+        fields = ['id', 'text', 'is_correct']
+
 
 # 問題シリアライザ
-class AnswerSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Answer
-        fields = ['id', 'answer_text', 'is_correct']
-
 class QuestionSerializer(serializers.ModelSerializer):
-    answers = AnswerSerializer(many=True, read_only=True)
+    answers = ChoiceSerializer(many=True, read_only=True)
 
     class Meta:
         model = Question
-        fields = ['id', 'question_text', 'explanation', 'answers']
+        fields = ['id', 'text', 'category', 'difficulty', 'explanation', 'answers']
 
 # ユーザースコアシリアライザ
 class UserScoreSerializer(serializers.ModelSerializer):
