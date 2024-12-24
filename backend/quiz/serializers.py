@@ -7,7 +7,6 @@ class ChoiceSerializer(serializers.ModelSerializer):
         model = Choice
         fields = ['id', 'text', 'is_correct']
 
-
 # 問題シリアライザ
 class QuestionSerializer(serializers.ModelSerializer):
     answers = ChoiceSerializer(many=True, read_only=True)
