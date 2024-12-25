@@ -10,9 +10,11 @@ const QuestionDisplay = () => {
   const [selectedAnswer, setSelectedAnswer] = useState(null);
   const [isAnswered, setIsAnswered] = useState(false);
   const [showExplanation, setShowExplanation] = useState(false);
+  const [questionId, setQuestionId] = useState(1);  //問題のIDを指定
 
   useEffect(() => {
-    axios.get('http://localhost:8000/api/question/1/')
+    setLoading(true);
+    axios.get(`http://localhost:8000/api/question/${questionId}/`)
       .then(response => {
         setQuestion(response.data);
         setLoading(false);
@@ -21,7 +23,7 @@ const QuestionDisplay = () => {
         setError(error);
         setLoading(false);
       });
-  }, []);
+  }, [questionId]);  // questionIdが変更されたときだけ再実行
 
   const handleAnswerSelect = (choiceId) => {
     setSelectedAnswer(choiceId);
@@ -40,14 +42,25 @@ const QuestionDisplay = () => {
     });
   };
 
+  const handleNextQuestion = () => {
+    setQuestionId(prevId => prevId + 1);
+    setIsAnswered(false);
+    setShowExplanation(false);
+    setSelectedAnswer(null);
+  };
+
   if (loading) return <div>Loading...</div>;
-  if (error) return <div>Error: {error.message}</div>;
+  if (error) {
+    console.log('エラー:', error);
+    return <div>Error: {error.message}</div>;
+  }
   if (!question) return <div>No question available.</div>;
 
   return (
     <div>
       <h2>問題</h2>
-      <Question 
+      <Question
+        questionId={question.id}
         questionText={question.text}
         choices={question.choices}
         onAnswerSelect={handleAnswerSelect}
@@ -56,6 +69,7 @@ const QuestionDisplay = () => {
       {showExplanation && (
         <AnswerFeedback explanation={question.explanation} />
       )}
+      <button onClick={handleNextQuestion}>次の問題</button>
     </div>
   );
 };

@@ -1,10 +1,10 @@
 import React from 'react';
 import Choices from './Choices';
 
-const Question = ({ questionText, choices, onAnswerSelect, isAnswered }) => {
+const Question = ({ questionText, questionId, choices, onAnswerSelect, isAnswered }) => {
   return (
     <div>
-      <p>{questionText}</p>
+      <p>({questionId}) : {questionText}</p>
       <div>
         {choices.map((choice) => (
           <Choices

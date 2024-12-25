@@ -4,7 +4,7 @@ import QuestionDisplay from "./components/QuestionDisplay.js";
 function App() {
   return (
     <div>
-      <h1>ウイスキークイズ</h1>
+      <h1>ウイスキー検定クイズ</h1>
       <QuestionDisplay />
     </div>
   );
