@@ -1,0 +1,31 @@
+.navbar {
+    background-color: #333;
+    padding: 10px;
+    color: #fff;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.navbar-list {
+    list-style-type: none;
+    display: flex; /* 常に横並び */
+    gap: 20px;
+    margin: 0;
+}
+
+.navbar-list li {
+    margin: 0;
+}
+
+.navbar-list a {
+    color: #fff;
+    text-decoration: none;
+}
+
+/* 画面幅が768px以下でも通常のメニューを表示 */
+@media (max-width: 768px) {
+    .navbar-list {
+        display: flex;  /* メニューを常に表示 */
+    }
+}
