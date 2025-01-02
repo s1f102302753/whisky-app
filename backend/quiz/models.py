@@ -19,7 +19,14 @@ class Question(models.Model):
         on_delete=models.CASCADE,
         default=1
     )
-    difficulty = models.IntegerField(max_length=100, default=3)
+    difficulty = models.IntegerField(
+        choices=[
+            (1, 'Hard'),
+            (2, 'Medium'),
+            (3, 'Easy'),
+        ],
+        default=3,
+    )
     explanation = models.TextField(blank=True, null=True)
 
     def __str__(self):
@@ -43,7 +50,7 @@ class UserAnswer(models.Model):
 
 # ユーザースコア
 class UserScore(models.Model):
-    user = models.CharField(max_length=225)   # ユーザー名やIDを保存
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     score = models.IntegerField(default=0)
     date = models.DateTimeField(auto_now_add=True)
 

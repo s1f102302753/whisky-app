@@ -1,5 +1,9 @@
 from django.shortcuts import get_object_or_404
 from django.http import JsonResponse
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
+from rest_framework.views import APIView
+from rest_framework import status
 from .models import Question, Choice, UserAnswer, UserScore
 from django.contrib.auth.models import User
 
@@ -23,6 +27,7 @@ def get_question(request, question_id):
     return JsonResponse(question_data)
 
 # ユーザーの回答を保存するAPI
+@api_view(['POST'])
 def submit_answer(request):
     user = request.user
     question_id = request.POST.get('question_id')
@@ -32,7 +37,7 @@ def submit_answer(request):
     choice = get_object_or_404(Choice, id=choice_id)
     
     is_correct = choice.is_correct
-    user_answer = UserAnswer.objects.create(
+    UserAnswer.objects.create(
         user=user,
         question=question,
         selected_choice=choice,
@@ -49,3 +54,11 @@ def submit_answer(request):
         'is_correct': is_correct,
         'explanation': question.explanation
     })
+
+class RegisterUser(APIView):
+    def post(self, request):
+        serializer = UserSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response({'message': 'User registered successfully'}, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
