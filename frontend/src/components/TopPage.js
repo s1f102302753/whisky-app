@@ -11,8 +11,8 @@ const TopPage = () => {
 
     return (
         <div>
-            <h2>ウイスキー検定クイズ</h2>
-            
+            <h2>ウイスキー検定3級</h2>
+            <p>ウイスキーが好きで、興味を持ちはじめ、ウイスキーの基礎知識を持つ方を対象とした初級レベル。</p>
             <button onClick={handleStartQuiz}>スタート</button>
         </div>
     );
